@@ -6,3 +6,11 @@ plugins {
     id("com.android.library").apply(false)
     id("org.jetbrains.compose").apply(false)
 }
+
+buildscript {
+
+    dependencies {
+        // ...
+        classpath(libs.sqldelight.gradle)
+    }
+}

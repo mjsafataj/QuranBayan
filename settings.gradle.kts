@@ -1,4 +1,4 @@
-rootProject.name = "MyApplication"
+rootProject.name = "HolyQuran"
 
 include(":androidApp")
 include(":shared")
@@ -22,8 +22,8 @@ pluginManagement {
 
         id("com.android.application").version(agpVersion)
         id("com.android.library").version(agpVersion)
-
         id("org.jetbrains.compose").version(composeVersion)
+        id("io.insert-koin").version("3.5.0")
     }
 }
 
@@ -38,3 +38,4 @@ dependencyResolutionManagement {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
+include(":shared-ui")

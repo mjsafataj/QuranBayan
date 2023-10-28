@@ -1,11 +1,10 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
-plugins {
-    kotlin("multiplatform")
-    kotlin("plugin.serialization") version libs.versions.kotlin.get()
-    id("com.squareup.sqldelight")
-    id("com.android.library")
-}
+        plugins {
+            kotlin("multiplatform")
+            id("com.android.library")
+            id("org.jetbrains.compose")
+        }
 
 kotlin {
     androidTarget()
@@ -29,22 +28,21 @@ kotlin {
             dependencies {
                 implementation(libs.coroutines)
 
-                implementation(libs.ktor.core)
-                implementation(libs.ktor.contentnegotiation)
-                implementation(libs.ktor.serialization)
-
-                implementation(libs.sqldelight.runtime)
-
                 api(libs.koin.core)
+
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
             }
         }
 
 
         val androidMain by getting {
             dependencies {
+                api(libs.androidx.activity.compose)
                 api(libs.androidx.core.ktx)
-                implementation(libs.ktor.android)
-                implementation(libs.sqldelight.android)
             }
         }
 
@@ -53,12 +51,6 @@ kotlin {
 //        val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
-
-            dependencies{
-                implementation(libs.ktor.drawin)
-                implementation(libs.sqldelight.native)
-            }
-
 //            iosX64Main.dependsOn(this)
 //            iosArm64Main.dependsOn(this)
 //            iosSimulatorArm64Main.dependsOn(this)
@@ -67,7 +59,7 @@ kotlin {
 }
 
 android {
-     compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
     namespace = "ir.quran.bayan.common"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -85,3 +77,4 @@ android {
         jvmToolchain(17)
     }
 }
+
